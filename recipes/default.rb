@@ -34,7 +34,11 @@ end
 chef_gem "syslog-logger"
 
 template ::File.join(node['chef-client']['config_dir'], "client.rb") do
-  source "client.erb"
+  if Chef::VERSION.to_f < 11.4
+    source "client113.erb"
+  else
+    source "client.erb"
+  end
   variables node['chef-client']['log']
 end
 

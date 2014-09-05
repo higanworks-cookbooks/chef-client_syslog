@@ -6,13 +6,12 @@ reference from: https://gist.github.com/3616423
 
 # Requirements
 
-gem[syslog-logger] to chef's gem_home. (Automatic install it when run recipe[chef-client_syslog::default])
+chef-client cookbook
+syslog-logger gem (will be installed)
 
 # Usage
 
-  add run_list recipe[chef-client_syslog::default]
-
-
+add run_list recipe[chef-client_syslog::default]
 
 ## Suggegsions
 
@@ -43,13 +42,13 @@ chef-client daemon is watched by monit and controled under monit.
 
 # Attributes
 
+- default['chef_client']['log']['syslog_facility'] = '::Syslog::LOG_DAEMON'
 
-- default['chef-client']['config_dir']     = "/etc/chef"
-- default['chef-client']['log']['level']     = :info
-- default['chef-client']['log']['prog_name'] = "chef-client"
-- default['chef-client']['log']['facility']  = 8
-  - get const like  puts ::Syslog::LOG_USER
+The syslog facility to log to
 
+- default['chef_client']['log']['syslog_progname'] = 'chef-client'
+
+The program name reported to syslog
 
 # Recipes
 
@@ -58,3 +57,4 @@ chef-client daemon is watched by monit and controled under monit.
 # Author
 
 Author:: HiganWorks LLC (<sawanoboriyu@higanworks.com>)
+

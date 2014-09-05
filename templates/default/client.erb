@@ -1,15 +1,19 @@
-## Cteate by chef for <%= node['fqdn'] %>
-chef_server_url  "<%= Chef::Config.chef_server_url %>"
-validation_client_name "<%= Chef::Config.validation_client_name %>"
+## Created by chef for <%= node['fqdn'] %>
 
 ## log to syslog
 require 'rubygems'
 require 'syslog-logger'
-log_level        :<%= @level %>
+require 'syslog'
 
 Logger::Syslog.class_eval do
   attr_accessor :sync, :formatter
+
+  def write(message)
+    self << message
+  end
+
+  def close
+  end
 end
 
-log_location Logger::Syslog.new("<%= @prog_name %>", <%= @facility %> )
-
+log_location Logger::Syslog.new("<%= node['chef_client']['log']['syslog_progname'] %>", <%= node['chef_client']['log']['syslog_facility'] %> )

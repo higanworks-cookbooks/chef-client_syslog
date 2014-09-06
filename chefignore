@@ -48,5 +48,13 @@ Berksfile
 Berksfile.lock
 cookbooks/*
 
+# Librarian
+Cheffile
+Cheffile.lock
+tmp/*
+
 # Vagrant
 .vagrant
+
+# Kitchen
+.kitchen/*

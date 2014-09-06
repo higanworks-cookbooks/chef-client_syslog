@@ -24,21 +24,24 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-directory node['chef-client']['config_dir'] do
-  owner "root"
-  group "root"
-  mode "00755"
+[
+  node['chef_client']['conf_dir'],
+  ::File.join(node['chef_client']['conf_dir'], 'client.d')
+].each do |dirname|
+  directory dirname do
+    owner "root"
+    group "root"
+    mode "00755"
+  end
 end
-
 
 chef_gem "syslog-logger"
 
-template ::File.join(node['chef-client']['config_dir'], "client.rb") do
-  if Chef::VERSION.to_f < 11.4
-    source "client113.erb"
-  else
-    source "client.erb"
-  end
-  variables node['chef-client']['log']
+template ::File.join(node['chef_client']['conf_dir'], 'client.d', 'syslog.rb') do
+  source "client.erb"
+  mode "00644"
+  notifies :create, "ruby_block[reload_client_config]"
 end
+
+include_recipe 'chef-client::config'
 

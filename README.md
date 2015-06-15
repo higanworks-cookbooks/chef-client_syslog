@@ -1,3 +1,9 @@
+# DUPLICATED
+
+Chef-Client v12.4.0 supports syslog, Thank you.
+
+----
+
 # chef-client_syslog cookbook
 
 Send chef-client log to syslog.
